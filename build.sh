@@ -12,8 +12,9 @@ APPNAME="serval.emanuelesorce"
 if [ "$OPTION" == "help" ]; then
 	echo "options:"
 	echo "- help: show this screen"
-	echo "- build: build serval-dna"
-	echo "- configure: configure servald"
+	echo "- dna-build: build serval-dna"
+	echo "- dna-configure: configure servald"
+	echo "- dna-clean: clean serval-dna builds"
 	echo
 	exit 0
 fi
@@ -40,7 +41,7 @@ if [ ! -d serval-dna ]; then
 fi
 
 # build option
-if [ "$OPTION" == "build" ]; then
+if [ "$OPTION" == "dna-build" ]; then
 
 	# install dependencies
 	echo "--- Installing build dependencies..."
@@ -67,7 +68,7 @@ if [ "$OPTION" == "build" ]; then
 fi
 
 # configure daemon
-if [ "$OPTION" == "configure" ]; then
+if [ "$OPTION" == "dna-configure" ]; then
 	echo
 	echo "--- Configuring servald..."
 
@@ -76,4 +77,9 @@ if [ "$OPTION" == "configure" ]; then
 
 	echo "--- Configured!"
 	echo
+fi
+
+if [ "$OPTION" == "dna-clean"]; then
+	cd serval-dna
+	make clean
 fi
