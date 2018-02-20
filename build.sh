@@ -92,8 +92,12 @@ if [ "$OPTION" == "package" ]; then
 	mkdir cbuild
 	mkdir cbuild/bin/
 
+	echo "--- Packaging..."
+	echo
+
 	cp -r click/* cbuild/
-	cp serval-dna/servald cbuild/bin
+	cp serval-dna/servald cbuild/
+	cp src/set-up.sh cbuild/
 
 	click build cbuild --no-validate
 
