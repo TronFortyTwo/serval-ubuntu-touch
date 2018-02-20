@@ -1,0 +1,6 @@
+[Desktop Entry]
+_Name=Serval
+Exec=qmlscene qml/Main.qml -I qml/
+Terminal=false
+Type=Application
+X-Ubuntu-Touch=true

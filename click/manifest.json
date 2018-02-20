@@ -1,0 +1,15 @@
+{
+    "name": "serval.emanuelesorce",
+    "description": "Serval Project",
+    "architecture": "armhf",
+    "title": "Serval",
+    "hooks": {
+        "app": {
+            "apparmor": "app.apparmor",
+            "desktop":  "app.desktop"
+        }
+    },
+    "version": "0.0.1",
+    "maintainer": "Emanuele Sorce <emanuele.sorce@hotmail.com>",
+    "framework" : "ubuntu-sdk-15.04.6"
+}
