@@ -61,6 +61,7 @@ if [ "$OPTION" == "build" ]; then
 
 	echo
 	echo "--- Build process finished"
+	echo
 
 	exit 0
 fi
@@ -68,5 +69,11 @@ fi
 # configure daemon
 if [ "$OPTION" == "configure" ]; then
 	echo
-	echo "--- Configuring..."
+	echo "--- Configuring servald..."
+
+	# configure servald to work on wi-fi networks
+	serval-dna/servald config set interfaces.0.match 'wlan*'
+
+	echo "--- Configured!"
+	echo
 fi
