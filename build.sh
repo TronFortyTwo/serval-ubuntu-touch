@@ -1,6 +1,22 @@
 #!/bin/bash
 
+echo
+echo "Serval for Ubuntu Touch helper build script"
+echo
+
+OPTION="$1"
+
 APPNAME="serval.emanuelesorce"
+
+# help
+if [ "$OPTION" == "help" ]; then
+	echo "options:"
+	echo "- help: show this screen"
+	echo "- build: build serval-dna"
+	echo "- configure: configure servald"
+	echo
+	exit 0
+fi
 
 # check the servald-dna project is in the directory
 if [ ! -d serval-dna ]; then
@@ -23,32 +39,34 @@ if [ ! -d serval-dna ]; then
 	git clone https://github.com/servalproject/serval-dna
 fi
 
-# install dependencies
-echo "--- Installing build dependencies..."
-apt install autoconf automake build-essential clang libtool jq &&
+# build option
+if [ "$OPTION" == "build" ]; then
 
-# we'll follow standard procedure as it is specified by INSTALL.md
-cd serval-dna
+	# install dependencies
+	echo "--- Installing build dependencies..."
+	apt install autoconf automake build-essential clang libtool jq &&
 
-echo "--- Building serval-dna..."
+	# we'll follow standard procedure as it is specified by INSTALL.md
+	cd serval-dna
 
-# configure
-# We'll use clang instead of gcc since the vivid gcc version wont work
-# We'll set directories so that it can be packaged for ubuntu touch. Note: it require absolute path
-autoreconf -f -i -I m4 &&
-./configure CC="clang" --prefix="/home/phablet/.cache/$APPNAME" --sysconfdir="/home/phablet/.cache/$APPNAME/etc" --localstatedir="/home/phablet/.cache/$APPNAME/var" SERVAL_ETC_PATH="/home/phablet/.cache/$APPNAME/etc/serval" SERVAL_RUN_PATH="/home/phablet/.cache/$APPNAME/var/run/serval" SYSTEM_LOG_PATH="/home/phablet/.cache/$APPNAME/var/log" SERVAL_LOG_PATH="/home/phablet/.cache/$APPNAME/var/log/serval" RHIZOME_STORE_PATH="/home/phablet/.cache/$APPNAME/var/cache/serval" SERVAL_TMP_PATH="/home/phablet/.cache/$APPNAME/tmp/serval" &&
-# make
-make -j4
-echo
-echo "--- Build process finished"
-echo "--- Configure now servald?[Y/n]"
-echo
+	echo "--- Building serval-dna..."
 
-read input
+	# configure
+	# We'll use clang instead of gcc since the vivid gcc version wont work
+	# We'll set directories so that it can be packaged for ubuntu touch. Note: it require absolute path
+	autoreconf -f -i -I m4 &&
+	./configure CC="clang" --prefix="/home/phablet/.cache/$APPNAME" --sysconfdir="/home/phablet/.cache/$APPNAME/etc" --localstatedir="/home/phablet/.cache/$APPNAME/var" SERVAL_ETC_PATH="/home/phablet/.cache/$APPNAME/etc/serval" SERVAL_RUN_PATH="/home/phablet/.cache/$APPNAME/var/run/serval" SYSTEM_LOG_PATH="/home/phablet/.cache/$APPNAME/var/log" SERVAL_LOG_PATH="/home/phablet/.cache/$APPNAME/var/log/serval" RHIZOME_STORE_PATH="/home/phablet/.cache/$APPNAME/var/cache/serval" SERVAL_TMP_PATH="/home/phablet/.cache/$APPNAME/tmp/serval" &&
+	# make
+	make -j4
 
-if [ "$input" == "n" ]; then
-	echo "--- quitting then"
+	echo
+	echo "--- Build process finished"
+
 	exit 0
 fi
 
 # configure daemon
+if [ "$OPTION" == "configure" ]; then
+	echo
+	echo "--- Configuring..."
+fi
