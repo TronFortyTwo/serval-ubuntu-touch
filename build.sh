@@ -56,10 +56,9 @@ if [ "$OPTION" == "dna-build" ]; then
 	# configure
 	# We'll use clang instead of gcc since the vivid gcc version wont work
 	# We'll set directories so that it can be packaged for ubuntu touch. Note: it require absolute path
-	autoreconf -f -i -I m4 &&
-	./configure CC="clang" --prefix="/home/phablet/.cache/$APPNAME" --sysconfdir="/home/phablet/.cache/$APPNAME/etc" --localstatedir="/home/phablet/.cache/$APPNAME/var" SERVAL_ETC_PATH="/home/phablet/.cache/$APPNAME/etc/serval" SERVAL_RUN_PATH="/home/phablet/.cache/$APPNAME/var/run/serval" SYSTEM_LOG_PATH="/home/phablet/.cache/$APPNAME/var/log" SERVAL_LOG_PATH="/home/phablet/.cache/$APPNAME/var/log/serval" RHIZOME_STORE_PATH="/home/phablet/.cache/$APPNAME/var/cache/serval" SERVAL_TMP_PATH="/home/phablet/.cache/$APPNAME/tmp/serval" &&
-	# make
-	make
+	autoreconf -f -i -I m4
+	./configure CC="clang" --prefix="/home/phablet/.cache/$APPNAME" --sysconfdir="/home/phablet/.cache/$APPNAME/etc" --localstatedir="/home/phablet/.cache/$APPNAME/var" SERVAL_ETC_PATH="/home/phablet/.cache/$APPNAME/etc/serval" SERVAL_RUN_PATH="/home/phablet/.cache/$APPNAME/var/run/serval" SYSTEM_LOG_PATH="/home/phablet/.cache/$APPNAME/var/log" SERVAL_LOG_PATH="/home/phablet/.cache/$APPNAME/var/log/serval" RHIZOME_STORE_PATH="/home/phablet/.cache/$APPNAME/var/cache/serval" SERVAL_TMP_PATH="/home/phablet/.cache/$APPNAME/tmp/serval"
+	make -j4
 
 	echo
 	echo "--- Build process finished"
@@ -97,6 +96,8 @@ if [ "$OPTION" == "package" ]; then
 	cp serval-dna/servald cbuild/bin
 
 	click build cbuild --no-validate
+
+	rm -r cbuild
 
 	echo
 	echo "--- Packaging process finished"
