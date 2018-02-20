@@ -15,6 +15,7 @@ if [ "$OPTION" == "help" ]; then
 	echo "- dna-build: build serval-dna"
 	echo "- dna-configure: configure servald"
 	echo "- dna-clean: clean serval-dna builds"
+	echo "- package: assemble the .click package"
 	echo
 	exit 0
 fi
@@ -26,7 +27,7 @@ if [ ! -d serval-dna ]; then
 
 	read input
 
-	if [ "$input" == n]; then
+	if [ "$input" == "n" ]; then
 		echo "--- quitting then"
 		exit 0
 	fi
@@ -58,7 +59,7 @@ if [ "$OPTION" == "dna-build" ]; then
 	autoreconf -f -i -I m4 &&
 	./configure CC="clang" --prefix="/home/phablet/.cache/$APPNAME" --sysconfdir="/home/phablet/.cache/$APPNAME/etc" --localstatedir="/home/phablet/.cache/$APPNAME/var" SERVAL_ETC_PATH="/home/phablet/.cache/$APPNAME/etc/serval" SERVAL_RUN_PATH="/home/phablet/.cache/$APPNAME/var/run/serval" SYSTEM_LOG_PATH="/home/phablet/.cache/$APPNAME/var/log" SERVAL_LOG_PATH="/home/phablet/.cache/$APPNAME/var/log/serval" RHIZOME_STORE_PATH="/home/phablet/.cache/$APPNAME/var/cache/serval" SERVAL_TMP_PATH="/home/phablet/.cache/$APPNAME/tmp/serval" &&
 	# make
-	make -j4
+	make
 
 	echo
 	echo "--- Build process finished"
@@ -79,7 +80,27 @@ if [ "$OPTION" == "dna-configure" ]; then
 	echo
 fi
 
-if [ "$OPTION" == "dna-clean"]; then
+if [ "$OPTION" == "dna-clean" ]; then
 	cd serval-dna
 	make clean
+
+	echo
+	echo "Cleaning of serval-dna completed"
+	echo
+fi
+
+if [ "$OPTION" == "package" ]; then
+	mkdir cbuild
+	mkdir cbuild/bin/
+
+	cp -r click/* cbuild/
+	cp serval-dna/servald cbuild/bin
+
+	click build build .
+
+	echo
+	echo "--- Packaging process finished"
+	echo
+
+	exit 0
 fi
