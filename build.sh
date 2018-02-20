@@ -13,7 +13,6 @@ if [ "$OPTION" == "help" ]; then
 	echo "options:"
 	echo "- help: show this screen"
 	echo "- dna-build: build serval-dna"
-	echo "- dna-configure: configure servald"
 	echo "- dna-clean: clean serval-dna builds"
 	echo "- package: assemble the .click package"
 	echo
@@ -67,18 +66,6 @@ if [ "$OPTION" == "dna-build" ]; then
 	exit 0
 fi
 
-# configure daemon
-if [ "$OPTION" == "dna-configure" ]; then
-	echo
-	echo "--- Configuring servald..."
-
-	# configure servald to work on wi-fi networks
-	serval-dna/servald config set interfaces.0.match 'wlan*'
-
-	echo "--- Configured!"
-	echo
-fi
-
 if [ "$OPTION" == "dna-clean" ]; then
 	cd serval-dna
 	make clean
@@ -97,7 +84,8 @@ if [ "$OPTION" == "package" ]; then
 
 	cp -r click/* cbuild/
 	cp serval-dna/servald cbuild/
-	cp src/set-up.sh cbuild/
+	cp -r src/* cbuild/
+	cp serval.conf cbuild/
 
 	click build cbuild --no-validate
 

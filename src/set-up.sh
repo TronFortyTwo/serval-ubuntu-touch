@@ -10,6 +10,9 @@
 # ~/.cache/servald.emanuelesorce/
 #
 
+# remove old stuff
+rm -r -v ~/.cache/serval.emanuelesorce/
+
 # copy daemon
 mkdir ~/.cache/serval.emanuelesorce/
 mkdir ~/.cache/serval.emanuelesorce/bin
