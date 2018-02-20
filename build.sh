@@ -96,7 +96,7 @@ if [ "$OPTION" == "package" ]; then
 	cp -r click/* cbuild/
 	cp serval-dna/servald cbuild/bin
 
-	click build build .
+	click build cbuild --no-validate
 
 	echo
 	echo "--- Packaging process finished"
