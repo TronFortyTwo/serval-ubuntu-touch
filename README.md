@@ -12,3 +12,4 @@ There are various steps to get a .click package:
 
 You can see all the commands available with
 ./build.sh help
+

@@ -16,6 +16,8 @@ BasePage {
 
 		id: flick
 		
+		property var isinstalled: Template.execbool(" [ -d ~/.cache/serval.emanuelesorce/bin/servald ] ")
+
 		clip: true
 		contentHeight: contentColumn.height + units.gu(4)
 		flickableDirection: Flickable.VerticalFlick
@@ -35,15 +37,32 @@ BasePage {
 			Label {
 				width: parent.width
 				wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-				text: i18n.tr("Serval daemon test. This is just for testing, don't expect it to work")
+				text: i18n.tr("Serval daemon test. This is just for testing")
 			}
 
 			Button {
 				id: bone
 				text: i18n.tr("Set up servald")
+				visible: !flick.isinstalled
 				onClicked: {
 					Template.execbool("sh ../set-up.sh");
 					
+					visible = false;
+					installed.visible = true;
+					btwo.visible = true;
+					launchb.visible = true;
+					stopb.visible = true;
+				}
+			}
+
+			Button {
+				id: btwo
+				text: i18n.tr("servald already set up. Set up again?")
+				visible: flick.isinstalled
+
+				onClicked: {
+					Template.execbool("sh ../set-up.sh");
+
 					visible = false;
 					installed.visible = true;
 					launchb.visible = true;
@@ -59,8 +78,7 @@ BasePage {
 
 			Label {
 				id: launched
-				text: i18n.tr("Servald launched!");
-				color: UbuntuColors.green
+				text: i18n.tr("--");
 				visible: false
 			}
 
@@ -74,6 +92,24 @@ BasePage {
 					
 					visible = false
 					launched.visible = true
+					launched.text = i18n.tr("Servald started")
+					stopb.visible = true
+				}
+			}
+
+			Button {
+				text: i18n.tr("Stop daemon")
+				id: stopb
+				color: UbuntuColors.orange
+				visible: false
+				
+				onClicked: {
+					Template.execbool("~/.cache/serval.emanuelesorce/bin/servald stop")
+
+					visible = false
+					launched.visible = true
+					launched.text = i18n.tr ("Servald stopped")
+					launchb.visible = true
 				}
 			}
 		}
