@@ -86,7 +86,7 @@ BasePage {
 				text: i18n.tr("Start daemon")
 				id: launchb
 				color: UbuntuColors.green
-				visible: false
+				visible: isinstalled
 				onClicked: {
 					var result = Template.execbool("~/.cache/serval.emanuelesorce/bin/servald start");
 					
@@ -101,7 +101,7 @@ BasePage {
 				text: i18n.tr("Stop daemon")
 				id: stopb
 				color: UbuntuColors.orange
-				visible: false
+				visible: isinstalled
 				
 				onClicked: {
 					Template.execbool("~/.cache/serval.emanuelesorce/bin/servald stop")
