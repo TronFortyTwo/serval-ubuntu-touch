@@ -1,3 +1,4 @@
 serval-dna
 *.click
 cbuild
+/src/gui/build

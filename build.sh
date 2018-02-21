@@ -11,10 +11,12 @@ APPNAME="serval.emanuelesorce"
 # help
 if [ "$OPTION" == "help" ]; then
 	echo "options:"
-	echo "- help: show this screen"
+	echo "- help:      show this screen"
 	echo "- dna-build: build serval-dna"
 	echo "- dna-clean: clean serval-dna builds"
-	echo "- package: assemble the .click package"
+	echo "- gui-build: build the QML gui"
+	echo "- gui-clean: clean QML gui builds"
+	echo "- package:   assemble the .click package"
 	echo
 	exit 0
 fi
@@ -71,8 +73,31 @@ if [ "$OPTION" == "dna-clean" ]; then
 	make clean
 
 	echo
-	echo "Cleaning of serval-dna completed"
+	echo "--- Cleaning of serval-dna completed"
 	echo
+fi
+
+if [ "$OPTION" == "gui-build" ]; then
+	cd src/ui
+	./build-ui.sh
+	cd ../..
+
+	echo
+	echo "--- GUI build process completed"
+	echo
+
+	exit 0
+fi
+
+if [ "$OPTION" == "gui-clean" ]; then
+
+	rm -r src/ui/build
+
+	echo
+	echo "--- GUI clean process completed"
+	echo
+
+	exit 0
 fi
 
 if [ "$OPTION" == "package" ]; then
@@ -84,8 +109,10 @@ if [ "$OPTION" == "package" ]; then
 
 	cp -r click/* cbuild/
 	cp serval-dna/servald cbuild/
-	cp -r src/* cbuild/
+	cp -r src/set-up.sh cbuild/
 	cp serval.conf cbuild/
+	cp -r src/ui/build/qml cbuild/
+	cp -r assets cbuild/
 
 	click build cbuild --no-validate
 
