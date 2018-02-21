@@ -53,7 +53,7 @@ BasePage {
 			Label {
 				id: installed
 				text: i18n.tr("Servald set up done!");
-				color: UbuntuColors.yellow
+				color: UbuntuColors.green
 				visible: false
 			}
 
