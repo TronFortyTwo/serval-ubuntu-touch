@@ -1,5 +1,5 @@
 import QtQuick 2.4
-import Ubuntu.Components 1.3 // XXX 1.1 has back buttons oO
+import Ubuntu.Components 1.3
 import QtQuick.Layouts 1.1
 
 Page {
@@ -21,7 +21,7 @@ Page {
          anchors.left: parent.left
          anchors.right: parent.right
          anchors.margins: units.gu(2)
-         spacing: units.gu(1)
+         spacing: units.gu(3)
 
          Label {
             width: parent.width

@@ -7,8 +7,8 @@ MainView {
 	objectName: 'mainView'
 	applicationName: 'serval.emanuelesorce'
 	automaticOrientation: true
-	width: units.gu(50)
-	height: units.gu(75)
+	width: units.gu(200)
+	height: units.gu(200)
 
 	Install {
 		id: install

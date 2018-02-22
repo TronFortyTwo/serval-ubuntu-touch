@@ -1,7 +1,7 @@
 import QtQuick 2.4
 import QtQuick.Layouts 1.1
 import Ubuntu.Components 1.3
-import Template 1.0
+import Cxxb 1.0
 
 BasePage {
 	id: install
@@ -16,7 +16,7 @@ BasePage {
 
 		id: flick
 		
-		property var isinstalled: Template.execbool(" [ -d ~/.cache/serval.emanuelesorce/bin/servald ] ")
+		property var isinstalled: Cxxb.execbool(" [ -d ~/.cache/serval.emanuelesorce/bin/servald ] ")
 
 		clip: true
 		contentHeight: contentColumn.height + units.gu(4)
@@ -45,7 +45,7 @@ BasePage {
 				text: i18n.tr("Set up servald")
 				visible: !flick.isinstalled
 				onClicked: {
-					Template.execbool("sh ../set-up.sh");
+					Cxxb.execbool("sh ../set-up.sh");
 					
 					visible = false;
 					installed.visible = true;
@@ -61,7 +61,7 @@ BasePage {
 				visible: flick.isinstalled
 
 				onClicked: {
-					Template.execbool("sh ../set-up.sh");
+					Cxxb.execbool("sh ../set-up.sh");
 
 					visible = false;
 					installed.visible = true;
@@ -88,7 +88,7 @@ BasePage {
 				color: UbuntuColors.green
 				visible: isinstalled
 				onClicked: {
-					var result = Template.execbool("~/.cache/serval.emanuelesorce/bin/servald start");
+					var result = Cxxb.execbool("~/.cache/serval.emanuelesorce/bin/servald start");
 					
 					visible = false
 					launched.visible = true
@@ -104,7 +104,7 @@ BasePage {
 				visible: isinstalled
 				
 				onClicked: {
-					Template.execbool("~/.cache/serval.emanuelesorce/bin/servald stop")
+					Template.Cxxb("~/.cache/serval.emanuelesorce/bin/servald stop")
 
 					visible = false
 					launched.visible = true

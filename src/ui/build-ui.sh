@@ -24,7 +24,7 @@ make -j4
 
 # install plugin
 cd qml
-mkdir Template
-cp -v -r ../plugins/Template/qmldir Template
-cp -v -r ../plugins/Template/Template/libTemplate.so Template
+mkdir Cxxb
+cp -v -r ../plugins/Cxxb/qmldir Cxxb
+cp -v -r ../plugins/Cxxb/Cxxb/libCxxb.so Cxxb
 cd ..
