@@ -22,6 +22,8 @@ unsigned int Cxxb::execint (const QString& cmd) {
 		result = proc->exitCode();
 	}
 	qDebug() << "Exec: " << cmd << " | exit code: " << result;
+
+	return result;
 }
 
 bool Cxxb::execbool (const QString& cmd) {

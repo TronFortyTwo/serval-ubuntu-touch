@@ -16,7 +16,7 @@ BasePage {
 
 		id: flick
 		
-		property var isinstalled: Cxxb.execbool(" [ -d ~/.cache/serval.emanuelesorce/bin/servald ] ")
+		property var isinstalled: Cxxb.execbool(" if [ ! -f ~/.cache/serval.emanuelesorce/bin/servald ]; then; exit 1 ")
 
 		clip: true
 		contentHeight: contentColumn.height + units.gu(4)
@@ -51,7 +51,6 @@ BasePage {
 					installed.visible = true;
 					btwo.visible = true;
 					launchb.visible = true;
-					stopb.visible = true;
 				}
 			}
 
@@ -63,7 +62,6 @@ BasePage {
 				onClicked: {
 					Cxxb.execbool("sh ../set-up.sh");
 
-					visible = false;
 					installed.visible = true;
 					launchb.visible = true;
 				}
@@ -76,6 +74,12 @@ BasePage {
 				visible: false
 			}
 
+			Rectangle {
+				color: UbuntuColors.silk
+				height: units.gu(1)
+				width: parent.width
+			}
+
 			Label {
 				id: launched
 				text: i18n.tr("--");
@@ -86,7 +90,7 @@ BasePage {
 				text: i18n.tr("Start daemon")
 				id: launchb
 				color: UbuntuColors.green
-				visible: isinstalled
+				visible: flick.isinstalled
 				onClicked: {
 					var result = Cxxb.execbool("~/.cache/serval.emanuelesorce/bin/servald start");
 					
@@ -101,10 +105,10 @@ BasePage {
 				text: i18n.tr("Stop daemon")
 				id: stopb
 				color: UbuntuColors.orange
-				visible: isinstalled
+				visible: flick.isinstalled
 				
 				onClicked: {
-					Template.Cxxb("~/.cache/serval.emanuelesorce/bin/servald stop")
+					var result = Cxxb.execbool("~/.cache/serval.emanuelesorce/bin/servald stop")
 
 					visible = false
 					launched.visible = true
@@ -112,6 +116,16 @@ BasePage {
 					launchb.visible = true
 				}
 			}
+
+
+			// SPACING
+			Rectangle {
+				color: UbuntuColors.silk
+				width: parent.width
+				height: units.gu(1)
+			}
+
+			
 		}
 	}
 	Scrollbar {
