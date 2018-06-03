@@ -13,10 +13,11 @@ if [ "$OPTION" == "help" ]; then
 	echo "options:"
 	echo "- help:      show this screen"
 	echo "- dna-build: build serval-dna"
-	echo "- dna-clean: clean serval-dna builds"
+	echo "- dna-clean: clean serval-dna build"
 	echo "- gui-build: build the QML gui"
-	echo "- gui-clean: clean QML gui builds"
+	echo "- gui-clean: clean QML gui build"
 	echo "- package:   assemble the .click package"
+	echo "- launch:    launch the app locally (useful when working on the desktop)"
 	echo
 	exit 0
 fi
@@ -35,7 +36,7 @@ if [ ! -d serval-dna ]; then
 
 	# install git
 	echo "--- Installing git..."
-	apt install git
+	sudo apt install git
 
 	# clone serval dna repo
 	echo "--- Cloning serval-dna repo..."
@@ -47,7 +48,7 @@ if [ "$OPTION" == "dna-build" ]; then
 
 	# install dependencies
 	echo "--- Installing build dependencies..."
-	apt install autoconf automake build-essential clang libtool jq &&
+	sudo apt install autoconf automake build-essential clang libtool jq &&
 
 	# we'll follow standard procedure as it is specified by INSTALL.md
 	cd serval-dna
@@ -123,4 +124,21 @@ if [ "$OPTION" == "package" ]; then
 	echo
 
 	exit 0
+fi
+
+if [ "$OPTION" == "launch" ]; then
+
+    mkdir cbuild
+	mkdir cbuild/bin/
+
+    cp -r click/* cbuild/
+	cp serval-dna/servald cbuild/
+	cp -r src/set-up.sh cbuild/
+	cp serval.conf cbuild/
+	cp -r src/ui/build/qml cbuild/
+	cp -r assets cbuild/
+
+    qmlscene cbuild/qml/Main.qml -I cbuild/qml/
+    
+    rm -r cbuild
 fi

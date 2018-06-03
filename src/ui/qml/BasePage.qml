@@ -1,6 +1,5 @@
-import QtQuick 2.4
-import Ubuntu.Components 1.3
-import Ubuntu.Components.Popups 1.3
+import QtQuick 2.9
+import QtQuick.Controls 2.2
 
 Page {
     id: basepage
@@ -8,7 +7,7 @@ Page {
     head.actions: [
         Action {
             iconName: "info"
-            text: i18n.tr("About")
+            text: qsTr("About")
             onTriggered: {
                 pageStack.push(about);
             }

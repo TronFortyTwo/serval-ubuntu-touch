@@ -4,7 +4,7 @@
 echo
 echo "--- Installing dependencies..."
 echo
-apt install cmake libqt5declarative5 intltool qtbase5-dev qtdeclarative5-dev
+sudo apt install cmake intltool qtbase5-dev qtdeclarative5-dev qml-module-qtquick-controls2
 
 # Move files to the build locations
 echo

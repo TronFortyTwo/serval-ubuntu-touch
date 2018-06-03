@@ -1,25 +1,24 @@
-import QtQuick 2.4
-import QtQuick.Layouts 1.1
-import Ubuntu.Components 1.3
+import QtQuick 2.9
+import QtQuick.Controls 2.2
 import Cxxb 1.0
 
-BasePage {
+Page {
 	id: install
 	visible: false
-	title: i18n.tr('Serval')
+	title: qsTr('Serval')
 	
 	Flickable {
-        	anchors {
-        	    fill: parent
-        	    margins: units.gu(2)
-        	}
+		anchors {
+			fill: parent
+			margins: 20
+		}
 
 		id: flick
 		
 		property var isinstalled: Cxxb.execbool(" if [ ! -f ~/.cache/serval.emanuelesorce/bin/servald ]; then; exit 1 ")
 
 		clip: true
-		contentHeight: contentColumn.height + units.gu(4)
+		contentHeight: contentColumn.height + 40
 		flickableDirection: Flickable.VerticalFlick
 
 		Column {
@@ -28,21 +27,21 @@ BasePage {
 				left: parent.left
 				top: parent.top
 				right: parent.right
-				margins: units.gu(2)
+				margins: 30
 			}
 			width: parent.parent.width
 
-			spacing: units.gu(2)
+			spacing: 20
 
 			Label {
 				width: parent.width
 				wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-				text: i18n.tr("Serval daemon test. This is just for testing")
+				text: qsTr("Serval daemon test. This is just for testing")
 			}
 
 			Button {
 				id: bone
-				text: i18n.tr("Set up servald")
+				text: qsTr("Set up servald")
 				visible: !flick.isinstalled
 				onClicked: {
 					Cxxb.execbool("sh ../set-up.sh");
@@ -56,7 +55,7 @@ BasePage {
 
 			Button {
 				id: btwo
-				text: i18n.tr("servald already set up. Set up again?")
+				text: qsTr("servald already set up. Set up again?")
 				visible: flick.isinstalled
 
 				onClicked: {
@@ -69,27 +68,26 @@ BasePage {
 
 			Label {
 				id: installed
-				text: i18n.tr("Servald set up done!");
-				color: UbuntuColors.green
+				text: qsTr("Servald set up done!");
+				color: "green"
 				visible: false
 			}
 
 			Rectangle {
-				color: UbuntuColors.silk
-				height: units.gu(1)
+				color: "black"
+				height: 10
 				width: parent.width
 			}
 
 			Label {
 				id: launched
-				text: i18n.tr("--");
+				text: qsTr("--");
 				visible: false
 			}
 
 			Button {
-				text: i18n.tr("Start daemon")
+				text: qsTr("Start daemon")
 				id: launchb
-				color: UbuntuColors.green
 				visible: flick.isinstalled
 				onClicked: {
 					var result = Cxxb.execbool("~/.cache/serval.emanuelesorce/bin/servald start");
@@ -102,9 +100,8 @@ BasePage {
 			}
 
 			Button {
-				text: i18n.tr("Stop daemon")
+				text: qsTr("Stop daemon")
 				id: stopb
-				color: UbuntuColors.orange
 				visible: flick.isinstalled
 				
 				onClicked: {
@@ -112,7 +109,7 @@ BasePage {
 
 					visible = false
 					launched.visible = true
-					launched.text = i18n.tr ("Servald stopped")
+					launched.text = qsTr ("Servald stopped")
 					launchb.visible = true
 				}
 			}
@@ -120,17 +117,12 @@ BasePage {
 
 			// SPACING
 			Rectangle {
-				color: UbuntuColors.silk
 				width: parent.width
-				height: units.gu(1)
+				height: 10
 			}
 
 			
 		}
-	}
-	Scrollbar {
-		flickableItem: flick
-		align: Qt.AlignTrailing
 	}
 }
 
