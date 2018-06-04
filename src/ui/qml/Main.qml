@@ -3,27 +3,20 @@ import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.1
 
 ApplicationWindow {
-    id: root
-    visible: true
-    
-    width: 600
-	height: 400
 	
-	color: "white"
+	title: qsTr("Serval")
+	
+	id: root
+	visible: true
     
-    Install {
-        id: install
-    }
- 
-    About {
-		id: about
-	}
-
+	width: 800
+	height: 600
+	
+	color: "black"
+	
 	StackView {
 		id: stackview
-	}
-	
-	Component.onCompleted: {
-        stackview.push(install)
+		anchors.fill: parent
+		initialItem: Install{}
 	}
 }

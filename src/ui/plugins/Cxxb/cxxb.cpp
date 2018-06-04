@@ -3,9 +3,9 @@
 
 #include "cxxb.h"
 
-Cxxb::Cxxb() {
-    proc = new QProcess(this);
-}
+Cxxb::Cxxb():
+	proc(this)
+{}
 
 unsigned int Cxxb::execint (const QString& cmd) {
 
@@ -17,10 +17,18 @@ unsigned int Cxxb::execint (const QString& cmd) {
 	if (args.count() > 0)
 	{
 		QString program = args.takeFirst();
-		proc->start(program, args);
-		proc->waitForFinished();
-		result = proc->exitCode();
+		proc.start(program, args);
+		proc.waitForFinished();
+		result = proc.exitCode();
 	}
+	
+	QString p_stdout = proc.readAllStandardOutput();
+	QString p_stderr = proc.readAllStandardError();
+	
+	qDebug() << "command stdout:\n" << p_stdout;
+	
+	qDebug() << "command stderr:\n" << p_stderr;
+	
 	qDebug() << "Exec: " << cmd << " | exit code: " << result;
 
 	return result;

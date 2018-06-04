@@ -109,7 +109,7 @@ if [ "$OPTION" == "package" ]; then
 	echo
 
 	cp -r click/* cbuild/
-	cp serval-dna/servald cbuild/
+	cp serval-dna/servald cbuild/bin/
 	cp -r src/set-up.sh cbuild/
 	cp serval.conf cbuild/
 	cp -r src/ui/build/qml cbuild/
@@ -128,17 +128,30 @@ fi
 
 if [ "$OPTION" == "launch" ]; then
 
-    mkdir cbuild
+	echo
+	echo "--- Preparing launch environment"
+	
+	mkdir cbuild
 	mkdir cbuild/bin/
 
-    cp -r click/* cbuild/
-	cp serval-dna/servald cbuild/
+	cp -r click/* cbuild/
+	cp serval-dna/servald cbuild/bin/
 	cp -r src/set-up.sh cbuild/
 	cp serval.conf cbuild/
 	cp -r src/ui/build/qml cbuild/
 	cp -r assets cbuild/
-
-    qmlscene cbuild/qml/Main.qml -I cbuild/qml/
+	
+	echo
+	echo "--- Launching"
+	
+	cd cbuild
+	qmlscene qml/Main.qml -I qml/
+    cd ..
     
-    rm -r cbuild
+	rm -r cbuild
+	
+	echo
+	echo "--- Done"
+	
+	exit 0
 fi
