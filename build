@@ -129,7 +129,7 @@ function create_final_directory {
 	
 	cp -r click/* cbuild/
 	cp serval-dna/servald cbuild/bin/
-	cp -r src/set-up.sh cbuild/
+	cp -r src/*.sh cbuild/
 	cp serval.conf cbuild/
 	cp -r src/ui/build/qml cbuild/
 	cp -r assets cbuild/

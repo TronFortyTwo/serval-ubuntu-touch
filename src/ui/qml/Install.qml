@@ -6,7 +6,7 @@ Page {
 	id: install
 	title: qsTr('Serval')
 		
-	property var isinstalled: Cxxb.execbool(" exit test -x '~/.cache/serval.emanuelesorce/servald' ")
+	property var isinstalled: Cxxb.execbool("./checkifinstalled.sh")
 
 	clip: true
 
@@ -46,7 +46,7 @@ Page {
 			text: qsTr("Start daemon")
 			id: startb
 			onClicked: {
-				var result = Cxxb.execbool("./startservald.sh");
+				Cxxb.execbool("./startservald.sh");
 			}
 		}
 
@@ -55,7 +55,7 @@ Page {
 			id: stopb
 				
 			onClicked: {
-				var result = Cxxb.execbool("./stopservald.sh")
+				Cxxb.execbool("./stopservald.sh")
 			}
 		}
 	}

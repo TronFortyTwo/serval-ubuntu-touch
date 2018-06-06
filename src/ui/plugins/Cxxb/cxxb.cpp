@@ -4,7 +4,7 @@
 #include "cxxb.h"
 
 Cxxb::Cxxb() {
-    proc = new QProcess(this);
+	
 }
 
 unsigned int Cxxb::execint (const QString& cmd) {
@@ -17,16 +17,16 @@ unsigned int Cxxb::execint (const QString& cmd) {
 	if (args.count() > 0)
 	{
 		QString program = args.takeFirst();
-		proc->start(program, args);
-		proc->waitForFinished();
-		result = proc->exitCode();
+		result = QProcess::execute(program, args);
 	}
-	QString p_stdout = proc->readAllStandardOutput();
-	QString p_stderr = proc->readAllStandardError();
-	
-	qDebug() << "- command stdout:\n" << p_stdout;
-	qDebug() << "- command stderr:\n" << p_stderr;
 	qDebug() << "- exit code: " << result;
+
+	if (result == -2)
+		qDebug() << "ERROR: Process " << cmd << " cannot be started";
+	else if (result == -1)
+		qDebug() << "ERROR: Process " << cmd << " chrashed";
+
+	return static_cast<unsigned int>(result);
 }
 
 bool Cxxb::execbool (const QString& cmd) {

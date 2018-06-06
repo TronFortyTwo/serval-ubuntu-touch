@@ -16,7 +16,7 @@ public:
 	Q_INVOKABLE unsigned int execint(const QString&);
 
 private:
-    QProcess *proc;
+    //QProcess *proc;
 };
 
 #endif
