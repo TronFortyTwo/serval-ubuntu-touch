@@ -3,14 +3,9 @@
 
 #include "cxxb.h"
 
-Cxxb::Cxxb():
-	proc( new QProcess(this) )
-{}
-
-//Cxxb::~Cxxb()
-//{
-//	delete proc;
-//}
+Cxxb::Cxxb() {
+    proc = new QProcess(this);
+}
 
 unsigned int Cxxb::execint (const QString& cmd) {
 
@@ -24,19 +19,9 @@ unsigned int Cxxb::execint (const QString& cmd) {
 		QString program = args.takeFirst();
 		proc->start(program, args);
 		proc->waitForFinished();
-		
 		result = proc->exitCode();
-		QString p_stdout = proc->readAllStandardOutput();
-		QString p_stderr = proc->readAllStandardError();
-	
-		qDebug() << "command stdout:\n" << p_stdout;
-		qDebug() << "command stderr:\n" << p_stderr;
-		qDebug() << "Exit code: " << result;
-
-		return result;
 	}
-	else
-		return 1;
+	qDebug() << "Exec: " << cmd << " | exit code: " << result;
 }
 
 bool Cxxb::execbool (const QString& cmd) {
