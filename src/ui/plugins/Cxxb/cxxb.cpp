@@ -9,7 +9,7 @@ Cxxb::Cxxb() {
 
 unsigned int Cxxb::execint (const QString& cmd) {
 
-	qDebug() << "Exec: " << cmd;
+	qDebug() << "CXXB exec: " << cmd;
 	int result;
 
 	QStringList args = cmd.split(" ");
@@ -21,7 +21,12 @@ unsigned int Cxxb::execint (const QString& cmd) {
 		proc->waitForFinished();
 		result = proc->exitCode();
 	}
-	qDebug() << "Exec: " << cmd << " | exit code: " << result;
+	QString p_stdout = proc->readAllStandardOutput();
+	QString p_stderr = proc->readAllStandardError();
+	
+	qDebug() << "- command stdout:\n" << p_stdout;
+	qDebug() << "- command stderr:\n" << p_stderr;
+	qDebug() << "- exit code: " << result;
 }
 
 bool Cxxb::execbool (const QString& cmd) {

@@ -14,6 +14,7 @@ if [ "$OPTION" == "help" ]; then
 	echo "- help:      show this screen"
 	echo "- dna-build: build serval-dna targeting"
 	echo "- dna-clean: clean serval-dna build"
+	echo "- gui-deps:  install the QML gui dependencies"
 	echo "- gui-build: build the QML gui"
 	echo "- gui-clean: clean QML gui build"
 	echo "- package:   assemble a .click package"
@@ -77,6 +78,17 @@ if [ "$OPTION" == "dna-clean" ]; then
 	echo "--- Cleaning of serval-dna completed"
 	echo
 	
+	exit 0
+fi
+
+if [ "$OPTION" == "gui-deps" ]; then
+
+	./src/ui/ui-deps.sh
+
+	echo
+	echo "--- GUI dependencies installed"
+	echo
+
 	exit 0
 fi
 

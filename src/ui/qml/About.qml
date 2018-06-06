@@ -5,11 +5,7 @@ import QtQuick.Layouts 1.1
 Page {
 	title: qsTr("About")
 	id: about
-
-	anchors  {
-		fill: parent
-		margins: 5
-	}
+	
 	contentHeight: contentItem.childrenRect.height
 
 	Column {
@@ -35,6 +31,14 @@ Page {
 					Layout.alignment: Qt.AlignHCenter
 					source: "../assets/serval-logo.jpeg"
 				}
+			}
+		}
+
+		Button {
+			id: back_button
+			text: qsTr("Back")
+			onClicked: {
+				stackview.pop()
 			}
 		}
 	}

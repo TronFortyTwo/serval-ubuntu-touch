@@ -1,14 +1,8 @@
 #!/bin/bash
 
-# dependencies
-echo
-echo "--- Installing dependencies..."
-echo
-sudo apt install cmake intltool qtbase5-dev qtdeclarative5-dev qml-module-qtquick-controls2
-
 # Move files to the build locations
 echo
-echo "--- Building..."
+echo "--- Building UI..."
 echo
 
 mkdir build

@@ -7,8 +7,8 @@ You have to work on a Vivid container, as a OnTheRoad or Clickable (lxd or chroo
 
 There are various steps to get a .click package:
 1) Build serval-dna   --  ./build dna-build
-2) Build QML gui   --  ./build gui-build
-3) Package it all   --  ./build package
+2) Build the QML gui  --  ./build gui-build
+3) Package it all     --  ./build package
 
 You can see all the commands available with
 ./build help
