@@ -5,14 +5,13 @@ import QtQuick.Layouts 1.1
 Page {
 	title: qsTr("About")
 	id: about
-	
-	contentHeight: contentItem.childrenRect.height
+
+	clip: true
 
 	Column {
 		id: col
-		anchors.top: parent.top
-		anchors.left: parent.left
-		anchors.right: parent.right
+		anchors.fill: parent
+
 		spacing: 30
 
 		Label {
@@ -21,17 +20,10 @@ Page {
 			text: qsTr('Serval')
 		}
 
-		RowLayout {
-			width: parent.width
-			Rectangle {
-				Layout.alignment: Qt.AlignHCenter
-				width: 256
-				height: 256
-				Image {
-					Layout.alignment: Qt.AlignHCenter
-					source: "../assets/serval-logo.jpeg"
-				}
-			}
+		Image {
+			width: 128
+			height: 128
+			source: "../assets/serval-logo.jpeg"
 		}
 
 		Button {

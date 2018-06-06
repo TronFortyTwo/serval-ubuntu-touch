@@ -20,42 +20,103 @@ Page {
 
 		spacing: 20
 
-		Button {
-			id: about_button
-			text: qsTr("About")
-			onClicked: {
-				stackview.push("About.qml")
-			}
-		}
-
 		Label {
 			width: parent.width
 			wrapMode: Text.Wrap
-			text: qsTr("Serval daemon test. This is just for testing")
+			text: qsTr("QServal - This is ALPHA Software")
+		}
+
+		Label {
+			id: feedback
+			visible: true
+			text: qsTr("")
 		}
 
 		Button {
 			id: setupb
-			text: qsTr("Set up servald")
-			onClicked: {
-				Cxxb.execbool("./set-up.sh");
+			visible: !install.isinstalled
+			text: qsTr("Set up Serval")
+			onClicked:
+			{
+				var result = Cxxb.execbool("./set-up.sh");
+				if (result == true)
+				{
+					visible = false
+					setupagainb.visible = true
+					startb.visible = true
+					feedback.text = qsTr("Serval set up successfully.")
+				}
+				else
+				{
+					feedback.text = qsTr("Serval set up failed.")
+				}
+			}
+		}
+
+		Button {
+			id: setupagainb
+			visible: install.isinstalled
+			text: qsTr("Serval is already set up. Set up again?")
+			onClicked:
+			{
+				var result = Cxxb.execbool("./set-up.sh");
+				if (result == true)
+				{
+					feedback.text = qsTr("Serval set up successfully.")
+				}
+				else
+				{
+					feedback.text = qsTr("Serval set up failed.")
+				}
 			}
 		}
 		
 		Button {
 			text: qsTr("Start daemon")
 			id: startb
-			onClicked: {
-				Cxxb.execbool("./startservald.sh");
+			visible: install.isinstalled
+			onClicked:
+			{
+				var result = Cxxb.execbool("./startservald.sh");
+				if (result == true)
+				{
+					feedback.text = qsTr("Servald started succefully")
+					visible = false
+					stopb.visible = true
+				}
+				else
+				{
+					feedback.text = qsTr("Servald failed to start")
+				}
 			}
 		}
 
 		Button {
 			text: qsTr("Stop daemon")
 			id: stopb
-				
-			onClicked: {
-				Cxxb.execbool("./stopservald.sh")
+			visible: install.isinstalled
+			onClicked:
+			{
+				var result = Cxxb.execbool("./stopservald.sh")
+				if (result == true)
+				{
+					feedback.text = qsTr("Servald started succefully")
+					visible = false
+					startb.visible = true
+				}
+				else
+				{
+					feedback.text = qsTr("Servald failed to start")
+				}
+			}
+		}
+
+		Button {
+			id: about_button
+			text: qsTr("About")
+			onClicked:
+			{
+				stackview.push("About.qml")
 			}
 		}
 	}
