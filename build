@@ -12,11 +12,11 @@ APPNAME="serval.emanuelesorce"
 if [ "$OPTION" == "help" ]; then
 	echo "options:"
 	echo "- help:      show this screen"
-	echo "- dna-build: build serval-dna"
+	echo "- dna-build: build serval-dna targeting"
 	echo "- dna-clean: clean serval-dna build"
 	echo "- gui-build: build the QML gui"
 	echo "- gui-clean: clean QML gui build"
-	echo "- package:   assemble the .click package"
+	echo "- package:   assemble a .click package"
 	echo "- launch:    launch the app locally (useful when working on the desktop)"
 	echo
 	exit 0
@@ -43,23 +43,23 @@ if [ ! -d serval-dna ]; then
 	git clone https://github.com/servalproject/serval-dna
 fi
 
-# build option
+# build serval DNA for
 if [ "$OPTION" == "dna-build" ]; then
 
 	# install dependencies
 	echo "--- Installing build dependencies..."
 	sudo apt install autoconf automake build-essential clang libtool jq &&
 
+	echo "--- Building serval-dna for Ubuntu Touch..."
+
 	# we'll follow standard procedure as it is specified by INSTALL.md
 	cd serval-dna
-
-	echo "--- Building serval-dna..."
-
+	
 	# configure
-	# We'll use clang instead of gcc since the vivid gcc version wont work
+	# We'll use clang instead of gcc since the vivid gcc version wont work (todo: is building with Clang required on Xenial too?)
 	# We'll set directories so that it can be packaged for ubuntu touch. Note: it require absolute path
 	autoreconf -f -i -I m4
-	./configure CC="clang" --prefix="/home/phablet/.cache/$APPNAME" --sysconfdir="/home/phablet/.cache/$APPNAME/etc" --localstatedir="/home/phablet/.cache/$APPNAME/var" SERVAL_ETC_PATH="/home/phablet/.cache/$APPNAME/etc/serval" SERVAL_RUN_PATH="/home/phablet/.cache/$APPNAME/var/run/serval" SYSTEM_LOG_PATH="/home/phablet/.cache/$APPNAME/var/log" SERVAL_LOG_PATH="/home/phablet/.cache/$APPNAME/var/log/serval" RHIZOME_STORE_PATH="/home/phablet/.cache/$APPNAME/var/cache/serval" SERVAL_TMP_PATH="/home/phablet/.cache/$APPNAME/tmp/serval"
+	./configure CC="clang"
 	make -j4
 
 	echo
@@ -76,6 +76,8 @@ if [ "$OPTION" == "dna-clean" ]; then
 	echo
 	echo "--- Cleaning of serval-dna completed"
 	echo
+	
+	exit 0
 fi
 
 if [ "$OPTION" == "gui-build" ]; then
@@ -101,19 +103,29 @@ if [ "$OPTION" == "gui-clean" ]; then
 	exit 0
 fi
 
-if [ "$OPTION" == "package" ]; then
-	mkdir cbuild
-	mkdir cbuild/bin/
-
+function create_final_directory {
+	
 	echo "--- Packaging..."
 	echo
-
+	
+	if [ -d cbuild ]; then
+		rm -rf cbuild
+	fi
+	
+	mkdir cbuild
+	mkdir cbuild/bin/
+	
 	cp -r click/* cbuild/
 	cp serval-dna/servald cbuild/bin/
 	cp -r src/set-up.sh cbuild/
 	cp serval.conf cbuild/
 	cp -r src/ui/build/qml cbuild/
 	cp -r assets cbuild/
+}
+
+if [ "$OPTION" == "package" ]; then
+
+	create_final_directory
 
 	click build cbuild --no-validate
 
@@ -131,15 +143,7 @@ if [ "$OPTION" == "launch" ]; then
 	echo
 	echo "--- Preparing launch environment"
 	
-	mkdir cbuild
-	mkdir cbuild/bin/
-
-	cp -r click/* cbuild/
-	cp serval-dna/servald cbuild/bin/
-	cp -r src/set-up.sh cbuild/
-	cp serval.conf cbuild/
-	cp -r src/ui/build/qml cbuild/
-	cp -r assets cbuild/
+	create_final_directory
 	
 	echo
 	echo "--- Launching"
@@ -155,3 +159,9 @@ if [ "$OPTION" == "launch" ]; then
 	
 	exit 0
 fi
+
+# If we get here the command has not be recognized
+echo
+echo "--- Unknown option"
+echo "--- use 'help' for a list of available commands"
+

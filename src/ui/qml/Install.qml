@@ -11,7 +11,7 @@ Page {
 		margins: 5
 	}
 		
-	property var isinstalled: Cxxb.execbool(" exit test -x '~/.cache/serval.emanuelesorce/bin/servald' ")
+	property var isinstalled: Cxxb.execbool(" exit test -x '~/.cache/serval.emanuelesorce/servald' ")
 
 	clip: true
 
@@ -36,7 +36,7 @@ Page {
 			text: qsTr("Set up servald")
 			visible: !install.isinstalled
 			onClicked: {
-				Cxxb.execbool("set-up.sh");
+				Cxxb.execbool("./set-up.sh");
 				
 				visible = false;
 				installed.visible = true;
@@ -51,7 +51,7 @@ Page {
 			visible: install.isinstalled
 
 			onClicked: {
-				Cxxb.execbool("set-up.sh");
+				Cxxb.execbool("./set-up.sh");
 
 				installed.visible = true;
 				launchb.visible = true;
@@ -82,7 +82,7 @@ Page {
 			id: launchb
 			visible: install.isinstalled
 			onClicked: {
-				var result = Cxxb.execbool("~/.cache/serval.emanuelesorce/bin/servald start");
+				var result = Cxxb.execbool("./startservald.sh");
 					
 				visible = false
 				launched.visible = true
@@ -97,7 +97,7 @@ Page {
 			visible: install.isinstalled
 				
 			onClicked: {
-				var result = Cxxb.execbool("~/.cache/serval.emanuelesorce/bin/servald stop")
+				var result = Cxxb.execbool("~/.cache/serval.emanuelesorce/servald stop")
 
 				visible = false
 				launched.visible = true

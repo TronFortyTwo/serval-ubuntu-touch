@@ -7,17 +7,12 @@
 # ~/.cache/servald.emanuelesorce/
 #
 
-echo "setting up serval in ~/.cache/servald.emanuelesorce/"
-
 # remove old stuff
-rm -rf -v ~/.cache/serval.emanuelesorce/ && echo "wiped old directory"
+rm -rf -v ~/.cache/serval.emanuelesorce/
+mkdir -p ~/.cache/serval.emanuelesorce/
 
 # copy daemon
-mkdir -p ~/.cache/serval.emanuelesorce/bin && echo "created bin sub-directory"
-cp -v bin/servald ~/.cache/serval.emanuelesorce/bin && echo "moved servald"
+cp -v bin/servald ~/.cache/serval.emanuelesorce/
 
 # copy config file
-mkdir -p ~/.cache/serval.emanuelesorce/etc/serval && echo "created etc/serval sub-directory"
-cp -v serval.conf ~/.cache/serval.emanuelesorce/etc/serval/ && echo "moved configuration file"
-
-echo "setting up completed"
+cp -v serval.conf ~/.cache/serval.emanuelesorce/

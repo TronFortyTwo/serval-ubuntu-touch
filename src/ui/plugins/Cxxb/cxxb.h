@@ -9,13 +9,14 @@ class Cxxb: public QObject {
 
 public:
 	Cxxb();
+	~Cxxb() = default;
 
 	// QML->BASH binding
 	Q_INVOKABLE bool execbool(const QString&);
 	Q_INVOKABLE unsigned int execint(const QString&);
 
 private:
-    QProcess proc;
+    QProcess *proc;
 };
 
 #endif
