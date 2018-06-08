@@ -18,17 +18,20 @@
 #############################################################################
 */
 
-#ifndef TEMPLATEPLUGIN_H
-#define TEMPLATEPLUGIN_H
+function test_rest()
+{
+	var xmlHttp = new XMLHttpRequest();
 
-#include <QQmlExtensionPlugin>
+	xmlHttp.onreadystatechange = function()
+	{
+		if (xmlHttp.readyState == 4)
+		{
+			return xmlHttp.status;
+		}
+	}
+	xmlHttp.open("GET", "localhost:4110/restful/keyring/identities.json", true);
+	xmlHttp.setRequestHeader("Authorization", "Basic " + Qt.btoa("username:password"));
+	xmlHttp.send(null);
 
-class CxxbPlugin : public QQmlExtensionPlugin {
-    Q_OBJECT
-    Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QQmlExtensionInterface")
-
-public:
-    void registerTypes(const char *uri);
-};
-
-#endif
+	return "..."
+}

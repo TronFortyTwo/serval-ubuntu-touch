@@ -132,6 +132,7 @@ function create_final_directory {
 	cp -r src/*.sh cbuild/
 	cp serval.conf cbuild/
 	cp -r src/ui/build/qml cbuild/
+	cp -r src/ui/js cbuild/
 	cp -r assets cbuild/
 }
 

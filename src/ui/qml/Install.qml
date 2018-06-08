@@ -1,3 +1,23 @@
+/*
+#############################################################################
+#    Serval for Ubuntu Touch												#
+#    Copyright (C) 2018 Emanuele Sorce - emanuele.sorce@hotmail.com			#
+#																			#
+#    This program is free software; you can redistribute it and/or modify	#
+#    it under the terms of the GNU General Public License as published by	#
+#    the Free Software Foundation, version 3 or compatibles.				#
+#																			#
+#    This program is distributed in the hope that it will be useful,		#
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of			#
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the			#
+#    GNU General Public License for more details.							#
+#																			#
+#    You should have received a copy of the GNU General Public License		#
+#    along with this program; if not, write to the Free Software			#
+#    Foundation, Inc.														#
+#############################################################################
+*/
+
 import QtQuick 2.9
 import QtQuick.Controls 2.2
 import Cxxb 1.0
@@ -45,10 +65,12 @@ Page {
 					setupagainb.visible = true
 					startb.visible = true
 					feedback.text = qsTr("Serval set up successfully.")
+					feedback.color = "green"
 				}
 				else
 				{
 					feedback.text = qsTr("Serval set up failed.")
+					feedback.color = "red"
 				}
 			}
 		}
@@ -63,10 +85,12 @@ Page {
 				if (result == true)
 				{
 					feedback.text = qsTr("Serval set up successfully.")
+					feedback.color = "green"
 				}
 				else
 				{
 					feedback.text = qsTr("Serval set up failed.")
+					feedback.color = "red"
 				}
 			}
 		}
@@ -77,16 +101,25 @@ Page {
 			visible: install.isinstalled
 			onClicked:
 			{
-				var result = Cxxb.execbool("./startservald.sh");
+				var result = Cxxb.execint("./startservald.sh");
 				if (result == true)
 				{
 					feedback.text = qsTr("Servald started succefully")
+					feedback.color = "green"
+					visible = false
+					stopb.visible = true
+				}
+				else if (result == 10)
+				{
+					feedback.text = qsTr("Servald already running")
+					feedback.color = "yellow"
 					visible = false
 					stopb.visible = true
 				}
 				else
 				{
 					feedback.text = qsTr("Servald failed to start")
+					feedback.color = "red"
 				}
 			}
 		}
@@ -100,19 +133,30 @@ Page {
 				var result = Cxxb.execbool("./stopservald.sh")
 				if (result == true)
 				{
-					feedback.text = qsTr("Servald started succefully")
+					feedback.text = qsTr("Servald stopped succefully")
+					feedback.color = "green"
 					visible = false
 					startb.visible = true
 				}
 				else
 				{
-					feedback.text = qsTr("Servald failed to start")
+					feedback.text = qsTr("Servald failed to stop")
+					feedback.red = "green"
 				}
 			}
 		}
 
 		Button {
-			id: about_button
+			id: useb
+			text: qsTr("Use Serval")
+			onClicked:
+			{
+				stackview.push("Use.qml")
+			}
+		}
+
+		Button {
+			id: aboutb
 			text: qsTr("About")
 			onClicked:
 			{

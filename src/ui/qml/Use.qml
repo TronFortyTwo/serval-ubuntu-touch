@@ -18,17 +18,37 @@
 #############################################################################
 */
 
-#ifndef TEMPLATEPLUGIN_H
-#define TEMPLATEPLUGIN_H
+import QtQuick 2.9
+import QtQuick.Controls 2.2
+import Cxxb 1.0
 
-#include <QQmlExtensionPlugin>
+import "../js/js_test.js" as Jstest
 
-class CxxbPlugin : public QQmlExtensionPlugin {
-    Q_OBJECT
-    Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QQmlExtensionInterface")
+Page
+{
+	id: install
+	title: qsTr('Serval')
 
-public:
-    void registerTypes(const char *uri);
-};
+	Column
+	{
+		spacing: 30
 
-#endif
+		Button
+		{
+			text: qsTr("Attemp 1")
+			onClicked:
+			{
+				text = Jstest.test_rest()
+			}
+		}
+
+		Button
+		{
+			text: qsTr('Back')
+			onClicked:
+			{
+				stackview.pop()
+			}
+		}
+	}
+}
